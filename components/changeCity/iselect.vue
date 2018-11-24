@@ -30,69 +30,80 @@
 </template>
 
 <script>
-import _ from 'lodash';
+import _ from 'lodash'
 export default {
-  data(){
+  data() {
     return {
-      province:[],
-      pvalue:'',
-      city:[],
-      cvalue:'',
-      input:'',
-      cities:[]
+      province: [],
+      pvalue: '',
+      city: [],
+      cvalue: '',
+      input: '',
+      cities: []
     }
   },
-  watch:{
-    pvalue:async function(newPvalue){
-      let self=this;
-      let {status,data:{city}}=await self.$axios.get(`/geo/province/${newPvalue}`)
-      if(status===200){
-        self.city=city.map(item=>{
+  watch: {
+    pvalue: async function(newPvalue) {
+      let self = this
+      let {
+        status,
+        data: { city }
+      } = await self.$axios.get(`/geo/province/${newPvalue}`)
+      if (status === 200) {
+        self.city = city.map(item => {
           return {
-            value:item.id,
-            label:item.name
+            value: item.id,
+            label: item.name
           }
         })
-        self.cvalue=''
+        self.cvalue = ''
       }
     }
   },
-  mounted:async function(){
-    let self=this;
-    let {status,data:{province}}=await self.$axios.get('/geo/province')
-    if(status===200){
-      self.province=province.map(item=>{
+  mounted: async function() {
+    let self = this
+    let {
+      status,
+      data: { province }
+    } = await self.$axios.get('/geo/province')
+    if (status === 200) {
+      self.province = province.map(item => {
         return {
-          value:item.id,
-          label:item.name
+          value: item.id,
+          label: item.name
         }
       })
     }
   },
-  methods:{
-    querySearchAsync:_.debounce(async function(query,cb){
-      let self=this;
-      if(self.cities.length){
-        cb(self.cities.filter(item => item.value.indexOf(query)>-1))
-      }else{
-        let {status,data:{city}}=await self.$axios.get('/geo/city')
-        if(status===200){
-          self.cities=city.map(item=>{return {
-            value:item.name
-          }})
-          cb(self.cities.filter(item => item.value.indexOf(query)>-1))
-        }else{
+  methods: {
+    querySearchAsync: _.debounce(async function(query, cb) {
+      let self = this
+      if (self.cities.length) {
+        cb(self.cities.filter(item => item.value.indexOf(query) > -1))
+      } else {
+        let {
+          status,
+          data: { city }
+        } = await self.$axios.get('/geo/city')
+        if (status === 200) {
+          self.cities = city.map(item => {
+            return {
+              value: item.name
+            }
+          })
+          cb(self.cities.filter(item => item.value.indexOf(query) > -1))
+        } else {
           cb([])
         }
       }
-    },200),
-    handleSelect:function(item){
-      console.log(item.value);
+    }, 200),
+    handleSelect: function(item) {
+      console.log(item.value)
     }
   }
 }
 </script>
 
 <style lang="scss">
-  @import "@/assets/css/changeCity/iselect.scss";
+@import '@/assets/css/changeCity/iselect.scss';
 </style>

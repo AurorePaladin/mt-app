@@ -25,43 +25,49 @@
 <script>
 import pyjs from 'js-pinyin'
 export default {
-  data(){
+  data() {
     return {
-      list:'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''),
-      block:[]
+      list: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''),
+      block: []
     }
   },
-  async mounted(){
-    let self=this;
-    let blocks=[]
-    let {status,data:{city}}=await self.$axios.get('/geo/city');
-    if(status===200){
+  async mounted() {
+    let self = this
+    let blocks = []
+    let {
+      status,
+      data: { city }
+    } = await self.$axios.get('/geo/city')
+    if (status === 200) {
       let p
       let c
-      let d={}
-      city.forEach(item=>{
-        p=pyjs.getFullChars(item.name).toLocaleLowerCase().slice(0,1)
-        c=p.charCodeAt(0)
-        if(c>96&&c<123){
-          if(!d[p]){
-            d[p]=[]
+      let d = {}
+      city.forEach(item => {
+        p = pyjs
+          .getFullChars(item.name)
+          .toLocaleLowerCase()
+          .slice(0, 1)
+        c = p.charCodeAt(0)
+        if (c > 96 && c < 123) {
+          if (!d[p]) {
+            d[p] = []
           }
           d[p].push(item.name)
         }
       })
-      for(let [k,v] of Object.entries(d)){
+      for (let [k, v] of Object.entries(d)) {
         blocks.push({
-          title:k.toUpperCase(),
-          city:v
+          title: k.toUpperCase(),
+          city: v
         })
       }
-      blocks.sort((a,b)=>a.title.charCodeAt(0)-b.title.charCodeAt(0))
-      self.block=blocks
+      blocks.sort((a, b) => a.title.charCodeAt(0) - b.title.charCodeAt(0))
+      self.block = blocks
     }
   }
 }
 </script>
 
 <style lang="scss">
-  @import "@/assets/css/changeCity/categroy.scss";
+@import '@/assets/css/changeCity/categroy.scss';
 </style>

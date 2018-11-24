@@ -1,6 +1,6 @@
-# mt-app
+# test3
 
-> My cool Nuxt.js project
+> My stellar Nuxt.js project
 
 ## Build Setup
 
