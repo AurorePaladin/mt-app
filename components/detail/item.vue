@@ -40,17 +40,16 @@ export default {
     }
   },
   methods: {
-    createCart: async function () {
-      let self = this;
+    createCart: async function() {
+      let self = this
       let {
         status,
-        data: {
-          code,
-          id
-        }
+        data: { code, id }
       } = await this.$axios.post('/cart/create', {
         params: {
-          id: Math.random().toString().slice(3, 9),
+          id: Math.random()
+            .toString()
+            .slice(3, 9),
           detail: {
             name: self.meta.name,
             price: self.meta.biz_ext.cost,
@@ -58,9 +57,9 @@ export default {
           }
         }
       })
-      if(status===200&&code===0){
-        window.location.href=`/cart/?id=${id}`
-      }else{
+      if (status === 200 && code === 0) {
+        window.location.href = `/cart/?id=${id}`
+      } else {
         console.log('error')
       }
     }
@@ -69,6 +68,4 @@ export default {
 </script>
 
 <style lang="scss">
-
-
 </style>
