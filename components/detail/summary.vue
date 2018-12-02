@@ -34,8 +34,8 @@
 export default {
   props: {
     meta: {
-      type:Object,
-      default:()=>{
+      type: Object,
+      default: () => {
         return {}
       }
     }
@@ -46,14 +46,12 @@ export default {
     }
   },
   computed: {
-    rate: function () {
+    rate: function() {
       return Number(this.meta.biz_ext.rating) || Math.floor(Math.random() * 5)
     }
   },
   methods: {
-    openMap: function (location) {
-
-    }
+    openMap: function(location) {}
   }
 }
 </script>
