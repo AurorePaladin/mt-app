@@ -41,30 +41,33 @@
 </template>
 
 <script>
-import Crumbs from '@/components/detail/crumbs.vue';
+import Crumbs from '@/components/detail/crumbs.vue'
 import Summa from '@/components/detail/summary.vue'
 import List from '@/components/detail/list.vue'
 export default {
-  components:{
+  components: {
     Crumbs,
     Summa,
     List
   },
-  computed:{
-    canOrder:function(){
-      return this.list.filter(item=>item.photos.length).length
+  computed: {
+    canOrder: function() {
+      return this.list.filter(item => item.photos.length).length
     }
   },
-  async asyncData(ctx){
-    let {keyword,type}=ctx.query;
-    let {status,data:{product,more:list,login}}=await ctx.$axios.get('/search/products',{
-      params:{
+  async asyncData(ctx) {
+    let { keyword, type } = ctx.query
+    let {
+      status,
+      data: { product, more: list, login }
+    } = await ctx.$axios.get('/search/products', {
+      params: {
         keyword,
         type,
-        city:ctx.store.state.geo.position.city
+        city: ctx.store.state.geo.position.city
       }
     })
-    if(status===200){
+    if (status === 200) {
       return {
         keyword,
         product,
@@ -72,13 +75,13 @@ export default {
         list,
         login
       }
-    }else{
+    } else {
       return {
         keyword,
-        product:{},
+        product: {},
         type,
-        list:[],
-        login:false
+        list: [],
+        login: false
       }
     }
   }
@@ -86,5 +89,5 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "@/assets/css/detail/index.scss";
+@import '@/assets/css/detail/index.scss';
 </style>
