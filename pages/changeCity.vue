@@ -23,7 +23,7 @@ import iSelect from '@/components/changeCity/iselect.vue'
 import Hot from '@/components/changeCity/hot.vue'
 import Categroy from '@/components/changeCity/categroy.vue'
 export default {
-  components:{
+  components: {
     iSelect,
     Hot,
     Categroy
